@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block 'title' %} {{ user.username }} {% endblock %}
+{% block 'content' %}
+{% load static %}
+
+<div class="container">
+    <div class="row mt-3" style="background-color:#F1F1F1 ;">
+        <div>
+            <h5 style="padding:20px;font-family: Lucida Bright;color:black;font-size:25px;">Your Playlist</h5>
+        </div>
+        {% if data %}
+        <div class="col col-sm-12">
+            <table class="table" style="font-family: Lucida Bright;">
+                <tr>
+                    <th>No</th>
+                    <th>Song</th>
+                    <th>Song Cover</th>
+                    <th>Listen</th>
+                </tr>
+                {% for i in data %}
+                    {% csrf_token %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.song.song_name }}</td>
+                        <td><img class="card-img-top" src="{{ i.song.song_image.url}}" width="50px" height="100px"></td>
+                        {% if user.is_authenticated %}
+                            <td><a href="{% url 'play' i.song.id %}" class="btn btn-dark" style="width:100px">Play<a> </td>
+                        {% else %}
+                            <td><a href="" onclick="showAlert('Login in the user to play the music')" class="btn btn-dark" style="width:100px">Play<a> </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class='container mt-5 bg-light'>
+            <h4 style="color:black;padding:100px;" align="center">
+                Empty Playlist
+            </h4>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

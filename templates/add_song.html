@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block 'title' %} {{ data.song_name }} {% endblock %}
+{% block 'content' %}
+{% load static %}
+
+<div class="container mt-3 row" style="background-color:#ECF0F1;padding:50px;">
+    <div class="col col-sm-6">
+      <form action="{% url 'add_song' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <label for="song_name">Song Name:</label>
+          <input type="text" class="form-control" id="song_name" placeholder="Enter Song Name" name="song_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="song">Song:</label>
+            <input type="file" class="form-control" id="song"  name="song_data" required>
+          </div>
+        <div class="mb-3">
+          <label for="song_cover">Song Cover:</label>
+          <input type="file" class="form-control" id="song_cover"  name="song_cover" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="category">Category</label><br>
+            <select id="category" name="category" required>
+                <option value="Old is Gold">Old is Gold</option>
+                <option value="Latest Hit">Latest Hit</option>
+                <option value="Hit of Salman">Hit of Salman</option>
+                <option value="90s Hits">90s Hits</option>
+            </select>
+        </div>
+        <div align="right">
+        <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col col-sm-6">
+        {% if msg %}
+            <h5 style="color:black">{{ msg }}</h5>
+        {% else %}
+            <img src="{% static 'images/jmusic.jpg' %}" width="400px" height="300px">
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

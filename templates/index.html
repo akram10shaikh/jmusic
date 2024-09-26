@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block 'title' %} J-Player {% endblock %}
+{% block 'content' %}
+{% load static %}
+<div class="container">
+
+            <div id="demo" class="carousel slide mt-4" data-bs-ride="carousel">
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner" style="-webkit-transition: 0.3s ease-in-out left;-moz-transition: 0.3s ease-in-out left;o-transition: 0.3s ease-in-out left;transition: 0.3s ease-in-out left;">
+                    {% for n in latest_hit %}
+                  <div class="carousel-item active">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'play' n.id %}">
+                    <img src="{{ n.song_image.url }}" alt="{{ n.song_name }}" class="d-block" width="900px" height="500px">
+                    </a>
+                    {% else %}
+                    <a href="" onclick="showAlert('Login to play the song')" >
+                        <img src="{{ n.song_image.url }}" alt="{{ n.song_name }}" class="d-block" width="900px" height="500px">
+                    </a>
+                    {% endif %}
+                </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+        </div>
+
+
+    <div class="row mt-3 " style="padding-bottom:20px;">
+        <div>
+            <h5 style="padding:20px;color:black;font-family: Lucida Bright;" class="alert alert-dark">Salman Khan Hits songs</h5>
+        </div>
+        {% for i in salman %}
+        <div class="col col-sm-3">
+            <div class="card bg-light" >
+                <img class="card-img-top" src="{{ i.song_image.url }}" alt="Card image" width="200px" height="200px">
+                <div class="card-body">
+                  <h5 class="card-title">{{ i.song_name }}</h5>
+                    {% if user.is_authenticated %}
+                            <a href="{% url 'play' i.id %}" id="link3" class="btn btn-dark" style="width:100px">Play</a>
+
+                    {% else %}
+                    <div align="center">
+                            <a href="" class="btn btn-dark"  id="link4" style="width:100px" onclick="showAlert('Login to play the song')" >Play</a>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="bg-light">
+        <h5 style="padding:20px;color:black;font-family: Lucida Bright;" class="alert alert-dark">Old is Gold Collection</h5>
+    </div>
+    <div class="card-group">
+        {% for s in old %}
+
+        <div class="card bg-light">
+          {% if user.is_authenticated %}
+          <a href="{% url 'play' s.id %}">
+          <img src="{{ s.song_image.url }}" alt="{{ n.song_name }}" class="d-block" width="300px" height="300px">
+          </a>
+          {% else %}
+          <img src="{{ s.song_image.url }}" alt="{{ n.song_name }}" class="d-block" width="300px" height="300px">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ s.song_name }}s</h5>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+    <div class="row mt-3" style="background-color:#F1F1F1 ;">
+        <div>
+            <h5 style="padding:20px;font-family: Lucida Bright;color:black;">Songs Available in the J-Music Player</h5>
+        </div>
+        <div class="col col-sm-12">
+            <table class="table" style="font-family: Lucida Bright;">
+                <tr>
+                    <th>No</th>
+                    <th>Song</th>
+                    {% comment %} <th>Song Cover</th> {% endcomment %}
+                    <th>Listen</th>
+                </tr>
+                {% for i in data %}
+                    {% csrf_token %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.song_name }}</td>
+                        {% comment %} <td><img class="card-img-top" src="{{ i.song_image.url}}" width="50px" height="50px"></td> {% endcomment %}
+                        {% if user.is_authenticated %}
+                            <td><a href="{% url 'play' i.id %}" class="btn btn-dark" style="width:100px">Play<a> </td>
+                        {% else %}
+                            <td><a href="" onclick="showAlert('Login in the user to play the music')" class="btn btn-dark" style="width:100px">Play<a> </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showAlert(message) {
+        alert(message);
+    }
+</script>
+{% endblock %}

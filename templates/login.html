@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block 'title' %} login {% endblock %}
+{% block 'content' %}
+{% load static %}
+<div class="container mt-3 row" style="background-color:#ECF0F1;padding:50px;">
+<div class="col col-sm-6">
+  <form action="{% url 'user_login' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3 mt-3">
+      <label for="user">Username:</label>
+      <input type="user" class="form-control" id="user" placeholder="Enter Username" name="user" required>
+    </div>
+    <div class="mb-3">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+    </div>
+    {% if msg %}
+    <div class="mb-3 mt-3">
+      <label for="user">Error : {{ msg }}</label>
+    </div>
+    {% endif %}
+    <div align="right">
+    <button type="submit" class="btn btn-dark">Submit</button>
+    </div>
+  </form>
+</div>
+<div class="col col-sm-6">
+  {% if msg1 %}
+  <div align="center" style="padding-top:25px;">
+    <h2 align="center" style="color:black;">{{ msg1 }}</h2><br>
+  </div>
+  {% else %}
+  <div align="center" style="padding-top:25px;">
+    <h2 align="center" style="color:black;">SignUp to play<br><br> the Music.</h2><br>
+    <a href="{% url 'create_user_page' %}" class="btn btn-dark">SignUp</a>
+    </div>
+  {% endif %}
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block 'title' %} {{ data.song_name }} {% endblock %}
+{% block 'content' %}
+{% load static %}
+
+<div class="row mt-3" style="background-color:#F1F1F1 ;padding:30px;">
+    {% if data %}
+    <div class="col col-sm-6">
+        <img  src="{{ data.song_image.url}}" width="300px" height="300px" >
+    </div>
+        <div class="col col-sm-6" style="border-style:solid;border-radius:5px;">
+
+            <div align="center" class="mt-1">
+                <h2>Playing Song</h2>
+            </div>
+            <br>
+            <br>
+            <div align="center">
+                <h4 style="padding-left:60px;">{{ data.song_name }}.....</h4>
+            </div>
+            <br>
+            <div align="center">
+            <audio controls style="width:400px;">
+                <source src="{{ data.song.url }}" type="audio/mp3" >
+            </audio>
+            </div>
+            <div align="center" style="padding-bottom:20px;">
+            <a class="btn btn-dark" href="{% url 'play' previous_song %}" style="font-size:20px;margin-right:30px;" >&#8656;</a>
+            <a class="btn btn-dark" href="{% url 'play' next_song %}" style="font-size:20px">&#8658;</a>
+            </div>
+            <div style="padding-bottom:20px;" align="center">
+            <a class="btn btn-dark" href="{% url 'stream_audio' data.id %}" style="width:140px;margin-right:80px;">Download</a>
+            <a class="btn btn-dark" href="{% url 'add_playlist' data.id %}" style="width:140px" onclick="showAlert('Song added in the playlist')" >Add to Playlist</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    function showAlert(message) {
+        alert(message)
+    }
+</script>
+
+{% endblock %}

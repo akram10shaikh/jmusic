@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block 'title' %} Profile {% endblock %}
+{% block 'content' %}
+{% load static %}
+<div class="row mt-3" style="background-color:#F1F1F1 ;padding:50px;">
+    <div>
+        <h4 style="padding:20px;">User Information</h4>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>########</td>
+        </tr>
+    </table>
+
+
+</div>
+{% endblock %}

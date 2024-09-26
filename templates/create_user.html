@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block 'title' %} J-Player {% endblock %}
+{% block 'content' %}
+{% load static %}
+
+<div class="container mt-3 row" style="background-color:#ECF0F1;padding:50px;">
+    <div class="col col-sm-6">
+      <form action="{% url 'create_user' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <label for="user">Username:</label>
+          <input type="user" class="form-control" id="user" placeholder="Enter Username" name="user" required>
+        </div>
+        {% if msg %}
+            <div class="mb-3 mt-3">
+                <label for="msg">Username is already exist. Try differnt name</label>
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
+          </div>
+        <div class="mb-3">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+        </div>
+        <div align="right">
+        <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col col-sm-6">
+        <img src="{% static 'images/jmusic.jpg' %}" width="400px" height="300px">
+    </div>
+</div>
+
+
+
+{% endblock %}
